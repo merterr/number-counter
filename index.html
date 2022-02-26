@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="number_counter_area">
+        <div>
+            <span id="text">Number</span>
+            <span id="number" data-number="139">139</span>
+        </div>
+        <div>
+            <span id="text1">Number1</span>
+            <span id="number1" data-number="4000000">4.000.000</span>
+        </div>
+        
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(()=>{
+
+            counter("number",100,10); 
+            counter("number1",100,10); 
+
+            function counter(numberElId,interval,step){
+                let numberEl = $("#"+numberElId);
+                let number = numberEl.data("number");
+                let digit = number.toString().length;
+                let i = 0;
+                let increment = parseInt(number / step);
+                
+                let timer = setInterval(() => {
+                    i = i + increment;
+                    let digitDiff = digit - i.toString().length;
+                    let formattedNumber="";
+                    if( digitDiff > 0){
+                        formattedNumber = "0".repeat(digitDiff);
+                    }
+                    if (i >= number) {
+                        i = number;
+                        clearInterval(timer);
+                    }  
+                    
+                    numberEl.text(formattedNumber + new Intl.NumberFormat(['ban', 'id']).format(i));
+                    
+                }, interval);
+            }
+        });
+
+        
+    </script>
+</body>
+</html>
